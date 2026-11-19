@@ -1,0 +1,5 @@
+# Parish Pulse — Environment metrics
+# Metric: Green Space
+# Updated: 2026-06-27
+date,green_space_ha,notes
+2026-06-27,0,Initial setup

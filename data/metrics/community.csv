@@ -1,0 +1,13 @@
+# Parish Pulse — Community Metrics
+# Parish: Nailsea
+# Updated: 2025-01-15
+#
+# Non-spatial community metrics for Nailsea parish.
+# Source: ONS mid-year estimates and Census 2021
+#
+date,population,households,notes
+2021-01-01,16421,6890,Census 2021 baseline
+2022-01-01,16580,6950,ONS mid-year estimate
+2023-01-01,16710,7010,ONS mid-year estimate
+2024-01-01,16830,7065,ONS mid-year estimate
+2025-01-01,16950,7120,ONS mid-year estimate (provisional)

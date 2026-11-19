@@ -1,0 +1,20 @@
+# Define one indicator per entry. CSV: first column date, second numeric value.
+metrics:
+  - id: empty_shops
+    label: Empty shops (illustrative)
+    description: Example indicator — replace with your own observations.
+    category: Retail
+    chart_type: bar
+    unit: shops
+    data_file: example.csv
+    source: Example data (not a real survey)
+# Spatial example (enable after uploading data/spatial/hexagons.geojson):
+#  - id: trees
+#    label: Trees per hexagon
+#    type: spatial
+#    unit: trees
+#    spatial:
+#      hexagon_property: tree_count
+#      classification: quantile  # or equal_interval
+#    analysis:
+#      operation: sum  # or mean, count, min, max

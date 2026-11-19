@@ -1,0 +1,23 @@
+# Parish Pulse — Education Metrics
+# Parish: Nailsea
+# Updated: 2025-01-15
+#
+# This file stores non-spatial (parish-wide) totals for education metrics.
+# For spatial data (locations on the map), edit the hexagons in QGIS.
+# See docs/metrics.md for full instructions.
+#
+# Columns:
+#   date          — ISO date of this record (YYYY-MM-DD)
+#   schools_total — total schools of all types in parish
+#   primary_count — number of primary schools
+#   secondary_count — number of secondary schools
+#   sen_count     — number of special educational needs schools
+#   notes         — any notes about this record
+#
+date,schools_total,primary_count,secondary_count,sen_count,notes
+2025-01-01,6,4,1,1,Initial baseline recorded from DfE register
+2025-02-01,6,4,1,1,No change
+2025-03-01,6,4,1,1,No change
+2025-04-01,6,4,1,1,No change
+2025-05-01,6,4,1,1,No change
+2025-06-01,7,5,1,1,New primary school opened - Youngwood Lane Primary

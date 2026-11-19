@@ -1,0 +1,24 @@
+{
+  "parish": {
+    "name": "Nailsea CP",
+    "local_authority": "North Somerset Council",
+    "county": "Somerset",
+    "description": "Nailsea is a town parish in North Somerset with a population of around 16,000 people.\n",
+    "website": "https://www.nailseatowncouncil.gov.uk"
+  },
+  "map": {
+    "centre": null,
+    "zoom": 13
+  },
+  "dashboard": {
+    "title": "Nailsea Parish Dashboard",
+    "subtitle": "Community metrics for Nailsea Town Parish",
+    "accent_colour": "#2D7D46"
+  },
+  "spatial": {
+    "parish_source": "data/spatial/parishes.gpkg",
+    "hexagon_source": "data/spatial/hexagons.gpkg",
+    "parish_id_column": "Census_Code",
+    "parish_id": "E04012095"
+  }
+}

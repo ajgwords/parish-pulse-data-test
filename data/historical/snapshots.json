@@ -1,0 +1,13 @@
+{
+  "_comment": "Managed by 'parish-pulse snapshot'. Do not edit manually.",
+  "parish": "Nailsea",
+  "snapshots": [
+    {
+      "date": "2026-07-21",
+      "label": "Test baseline",
+      "metrics": {
+        "empty_shops": "6"
+      }
+    }
+  ]
+}

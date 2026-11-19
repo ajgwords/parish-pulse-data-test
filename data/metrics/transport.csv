@@ -1,0 +1,11 @@
+# Parish Pulse — Transport Metrics
+# Parish: Nailsea
+# Updated: 2025-01-15
+#
+# Transport metrics. Bus stop totals are derived from hexagon layer.
+# Source: Traveline National Dataset
+#
+date,bus_stops,notes
+2025-01-01,34,Baseline from Traveline NaPTAN data
+2025-04-01,34,No change
+2025-06-01,33,Stop removed on West End Road (temporary closure)

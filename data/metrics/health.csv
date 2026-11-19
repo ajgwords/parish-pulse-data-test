@@ -1,0 +1,5 @@
+# Parish Pulse — Health metrics
+# Metric: GP Practices
+# Updated: 2026-06-27
+date,gp_practices,notes
+2026-06-27,0,Initial setup

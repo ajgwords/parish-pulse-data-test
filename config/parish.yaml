@@ -1,0 +1,70 @@
+# =============================================================================
+# Parish Pulse — Parish Configuration
+# =============================================================================
+# Fill in this file before running 'parish-pulse setup'.
+# Lines beginning with # are comments and are ignored.
+# =============================================================================
+
+parish:
+  # [REQUIRED] The name of your parish — must match exactly the name in
+  # the parishes.gpkg file (check spelling and capitalisation carefully).
+  name: "Nailsea CP"
+
+  # Your local authority / district council (used to disambiguate if two
+  # parishes share the same name).
+  local_authority: "North Somerset Council"
+
+  # If the parish name column in parishes.gpkg is not auto-detected,
+  # set its name here. Usually not needed.
+  # name_column: "PARISH_NM"
+
+  # County or region — shown on the dashboard.
+  county: "Somerset"
+
+  # A short description shown on the dashboard.
+  description: >
+    Nailsea is a town parish in North Somerset with a population of
+    around 16,000 people.
+
+  # Parish council website (optional).
+  website: "https://www.nailseatowncouncil.gov.uk"
+
+
+# =============================================================================
+# MAP SETTINGS
+# =============================================================================
+
+map:
+  # Starting centre of the map [latitude, longitude].
+  # If left blank, setup will auto-detect from the parish boundary centroid.
+  centre:
+
+  # Starting zoom level (10 = county view, 13 = town, 15 = street level).
+  zoom: 13
+
+
+# =============================================================================
+# DASHBOARD SETTINGS
+# =============================================================================
+
+dashboard:
+  # Title shown at the top of every page.
+  title: "Nailsea Parish Dashboard"
+
+  # Subtitle / tagline.
+  subtitle: "Community metrics for Nailsea Town Parish"
+
+  # Accent colour used throughout the site (hex code).
+  accent_colour: "#2D7D46"
+
+
+# National GeoPackages stay on your computer; do not commit them to GitHub.
+# Relative paths are resolved from the parish-pulse-data repository root.
+spatial:
+  parish_source: "data/spatial/parishes.gpkg"
+  hexagon_source: "data/spatial/hexagons.gpkg"
+  parish_id_column: "Census_Code"
+  parish_id: "E04012095"  # Fill in the verified Census_Code to select by unique ID.
+  #parish_name_column: "PARISH_NM"  # Set if auto-detection fails.
+  # local_authority_column: "LAD_NAME"
+  # hexagon_id_column: "hex_id"

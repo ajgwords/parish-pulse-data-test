@@ -1,0 +1,47 @@
+{
+  "generated": "2026-11-19",
+  "parish": {
+    "name": "Nailsea CP",
+    "local_authority": "North Somerset Council",
+    "county": "Somerset",
+    "description": "Nailsea is a town parish in North Somerset with a population of around 16,000 people.\n",
+    "website": "https://www.nailseatowncouncil.gov.uk"
+  },
+  "dashboard": {
+    "title": "Nailsea Parish Dashboard",
+    "subtitle": "Community metrics for Nailsea Town Parish",
+    "accent_colour": "#2D7D46"
+  },
+  "metrics": [
+    {
+      "id": "empty_shops",
+      "label": "Empty shops (illustrative)",
+      "description": "Example indicator — replace with your own observations.",
+      "category": "Retail",
+      "chart_type": "bar",
+      "source": "Example data (not a real survey)",
+      "source_url": null,
+      "unit": "shops",
+      "icon": null,
+      "type": "timeseries",
+      "current_value": 6.0,
+      "change": -1.0,
+      "history": [
+        {
+          "date": "2025-06-01",
+          "value": 7.0,
+          "notes": "Example only"
+        },
+        {
+          "date": "2026-06-01",
+          "value": 6.0,
+          "notes": "Example only"
+        }
+      ],
+      "latest_date": "2026-06-01"
+    }
+  ],
+  "hex_attributes": [
+    "hex_id"
+  ]
+}

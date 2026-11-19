@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parish Pulse — Map</title>
+  <link rel="stylesheet" href="css/style.css?v=20261119120236216507" />
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    .map-page { display: flex; flex-direction: column; height: 100vh; }
+    #map { flex: 1; }
+
+    /* Sidebar */
+    .map-sidebar {
+      position: absolute; top: 72px; right: 12px; z-index: 1000;
+      background: var(--surface); border-radius: var(--radius);
+      padding: 14px 16px; box-shadow: var(--shadow);
+      min-width: 180px; max-width: 220px;
+    }
+    .sidebar-label {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--muted); margin-bottom: 8px;
+    }
+    #attr-select {
+      width: 100%; padding: 6px 8px; border-radius: 6px;
+      border: 1px solid var(--border); font-size: 0.85rem;
+      background: var(--bg); color: var(--text);
+      font-family: var(--font);
+    }
+
+    /* Legend */
+    .legend {
+      margin-top: 14px;
+    }
+    .legend-bar {
+      height: 10px; border-radius: 5px; margin: 6px 0;
+      background: linear-gradient(to right, #e8f5e9, #1b5e20);
+    }
+    .legend-labels {
+      display: flex; justify-content: space-between;
+      font-size: 0.7rem; color: var(--muted);
+    }
+
+    /* Popup */
+    .hex-popup { font-size: 0.82rem; min-width: 140px; }
+    .hex-popup table { width: 100%; border-collapse: collapse; }
+    .hex-popup td { padding: 2px 4px; }
+    .hex-popup td:last-child { font-weight: 600; text-align: right; }
+    .hex-popup tr:nth-child(even) td { background: #f5f5f5; }
+  </style>
+</head>
+<body class="map-page">
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <img class="brand-icon" src="parish-pulse-icon.svg?v=20261119120236216507" alt="Parish Pulse logo: white heartbeat in a green hexagon" width="40" height="40">
+      <div>
+        <h1 id="site-title">Parish Pulse</h1>
+        <p class="subtitle">Map</p>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html" class="nav-link">Dashboard</a>
+      <a href="map.html"   class="nav-link active">Map</a>
+    </nav>
+  </div>
+</header>
+
+<div style="position:relative; flex:1; display:flex; flex-direction:column;">
+  <div id="map"></div>
+
+  <div class="map-sidebar" id="sidebar" style="display:none">
+    <div class="sidebar-label">Colour by</div>
+    <select id="attr-select"><option value="">— none —</option></select>
+    <div class="legend" id="legend" style="display:none">
+      <div class="sidebar-label" style="margin-top:10px">Value range</div>
+      <div class="legend-bar" id="legend-bar"></div>
+      <div class="legend-labels">
+        <span id="legend-min">0</span>
+        <span id="legend-max">max</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function loadJSON(url) {
+  const res = await fetch(`${url}?v=20261119120236216507`, {cache: "no-store"});
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+let map, hexLayer, boundaryLayer;
+let hexGeoJSON  = null;
+let activeAttr  = null;
+let cfgData     = null;
+
+const COLOUR_STEPS = ['#e8f5e9','#a5d6a7','#4caf50','#2e7d32','#1b5e20'];
+const NULL_COLOUR  = '#f0f0f0';
+const BOUNDARY_STYLE = { color: '#e65100', weight: 2.5, dashArray: '6 4', fillOpacity: 0 };
+
+async function init() {
+  let cfg, data;
+  try {
+    [cfg, data] = await Promise.all([
+      loadJSON('config.json'),
+      loadJSON('dashboard-data.json'),
+    ]);
+    cfgData = cfg;
+  } catch (e) {
+    document.getElementById('map').innerHTML =
+      `<p style="padding:2rem">Could not load data: ${e.message}<br>
+       Run <code>parish-pulse build</code> then refresh.</p>`;
+    return;
+  }
+
+  // Apply accent colour
+  const accent = cfg.dashboard?.accent_colour || '#2D7D46';
+  document.documentElement.style.setProperty('--accent', accent);
+  document.getElementById('site-title').textContent =
+    cfg.dashboard?.title || `${cfg.parish?.name || ''} Parish Pulse`;
+
+  // Map centre from config or UK default
+  const centre = cfg.map?.centre || [52.5, -1.5];
+  const zoom   = cfg.map?.zoom   || 13;
+
+  map = L.map('map').setView(centre, zoom);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+  }).addTo(map);
+
+  // Load boundary — served from web/ alongside map.html
+  try {
+    const boundary = await loadJSON('parish-boundary.geojson');
+    boundaryLayer = L.geoJSON(boundary, { style: BOUNDARY_STYLE }).addTo(map);
+    map.fitBounds(boundaryLayer.getBounds(), { padding: [20, 20] });
+  } catch { /* boundary optional — map still usable without it */ }
+
+  // Load hexagons — served from web/ alongside map.html
+  try {
+    hexGeoJSON = await loadJSON('hexagons.geojson');
+    buildSidebar(data.hex_attributes || []);
+    renderHexLayer(null);
+  } catch { /* hexagons optional — map still shows boundary */ }
+}
+
+// ── Sidebar ────────────────────────────────────────────────────────────────
+
+function buildSidebar(attributes) {
+  const numericAttrs = attributes.filter(a => {
+    // probe the first feature to check if the value looks numeric
+    const feat = hexGeoJSON.features[0];
+    if (!feat) return false;
+    const v = feat.properties[a];
+    return v !== null && v !== undefined && v !== '' && !isNaN(Number(v));
+  });
+
+  if (numericAttrs.length === 0) return;   // nothing to colour by
+
+  const select = document.getElementById('attr-select');
+  for (const a of numericAttrs) {
+    const opt = document.createElement('option');
+    opt.value = a;
+    opt.textContent = a.replace(/_/g, ' ');
+    select.appendChild(opt);
+  }
+
+  select.addEventListener('change', () => {
+    activeAttr = select.value || null;
+    renderHexLayer(activeAttr);
+    document.getElementById('legend').style.display = activeAttr ? '' : 'none';
+  });
+
+  document.getElementById('sidebar').style.display = '';
+}
+
+// ── Hexagon rendering ──────────────────────────────────────────────────────
+
+function renderHexLayer(attr) {
+  if (hexLayer) map.removeLayer(hexLayer);
+
+  // Compute value range for colour scale
+  let minVal = Infinity, maxVal = -Infinity;
+  if (attr) {
+    for (const f of hexGeoJSON.features) {
+      const v = Number(f.properties[attr]);
+      if (!isNaN(v)) { minVal = Math.min(minVal, v); maxVal = Math.max(maxVal, v); }
+    }
+    updateLegend(minVal, maxVal);
+  }
+
+  hexLayer = L.geoJSON(hexGeoJSON, {
+    style: feature => {
+      const fill = attr
+        ? valueToColour(Number(feature.properties[attr]), minVal, maxVal)
+        : NULL_COLOUR;
+      return { fillColor: fill, fillOpacity: 0.65, color: '#fff', weight: 0.7, opacity: 0.8 };
+    },
+    onEachFeature: (feature, layer) => {
+      const props = feature.properties;
+      const rows = Object.entries(props)
+        .map(([k, v]) => `<tr><td>${k.replace(/_/g,' ')}</td><td>${v ?? '—'}</td></tr>`)
+        .join('');
+      layer.bindPopup(`<div class="hex-popup"><table>${rows}</table></div>`);
+
+      layer.on('mouseover', e => e.target.setStyle({ fillOpacity: 0.9, weight: 1.5 }));
+      layer.on('mouseout',  e => { if (!e.target.isPopupOpen()) hexLayer.resetStyle(e.target); });
+    },
+  }).addTo(map);
+}
+
+function valueToColour(v, min, max) {
+  if (isNaN(v) || max === min) return COLOUR_STEPS[0];
+  const ratio = Math.max(0, Math.min(1, (v - min) / (max - min)));
+  const idx   = Math.round(ratio * (COLOUR_STEPS.length - 1));
+  return COLOUR_STEPS[idx];
+}
+
+function updateLegend(min, max) {
+  const accent = getComputedStyle(document.documentElement)
+    .getPropertyValue('--accent').trim() || '#2D7D46';
+  document.getElementById('legend-bar').style.background =
+    `linear-gradient(to right, ${COLOUR_STEPS[0]}, ${accent})`;
+  document.getElementById('legend-min').textContent = min === Infinity ? '0' : min;
+  document.getElementById('legend-max').textContent = max === -Infinity ? 'max' : max;
+}
+
+init();
+</script>
+</body>
+</html>
