@@ -1,5 +1,5 @@
-# Parish Pulse — Health metrics
-# Metric: GP Practices
-# Updated: 2026-06-27
 date,gp_practices,notes
-2026-06-27,0,Initial setup
+2023-06-27,1,Initial setup
+2024-06-27,2,
+2025-06-27,4,
+2026-06-27,2,Problems

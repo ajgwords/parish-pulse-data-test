@@ -1,3 +1,0 @@
-# Before GitHub deployment, replace YOUR_USERNAME with your actual GitHub account.
-# The core repository must be public or accessible to GitHub Actions.
-parish-pulse @ git+https://github.com/ajgwords/parish-pulse-core-test.git@main

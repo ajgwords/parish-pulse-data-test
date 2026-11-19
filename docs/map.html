@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parish Pulse — Map</title>
-  <link rel="stylesheet" href="css/style.css?v=20261119120236216507" />
+  <link rel="stylesheet" href="css/style.css?v=20261119151810212393" />
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -57,7 +57,7 @@
 <header class="site-header">
   <div class="header-inner">
     <div class="header-brand">
-      <img class="brand-icon" src="parish-pulse-icon.svg?v=20261119120236216507" alt="Parish Pulse logo: white heartbeat in a green hexagon" width="40" height="40">
+      <img class="brand-icon" src="parish-pulse-icon.svg?v=20261119151810212393" alt="Parish Pulse logo: white heartbeat in a green hexagon" width="40" height="40">
       <div>
         <h1 id="site-title">Parish Pulse</h1>
         <p class="subtitle">Map</p>
@@ -89,7 +89,7 @@
 
 <script>
 async function loadJSON(url) {
-  const res = await fetch(`${url}?v=20261119120236216507`, {cache: "no-store"});
+  const res = await fetch(`${url}?v=20261119151810212393`, {cache: "no-store"});
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }

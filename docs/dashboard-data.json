@@ -39,6 +39,43 @@
         }
       ],
       "latest_date": "2026-06-01"
+    },
+    {
+      "id": "health_test",
+      "label": "Some health thing (illustrative)",
+      "description": "Example indicator — replace with your own observations.",
+      "category": "RetaHealthil",
+      "chart_type": "line",
+      "source": "Example data (not a real survey)",
+      "source_url": null,
+      "unit": "stuff",
+      "icon": null,
+      "type": "timeseries",
+      "current_value": 2.0,
+      "change": -2.0,
+      "history": [
+        {
+          "date": "2023-06-27",
+          "value": 1.0,
+          "notes": "Initial setup"
+        },
+        {
+          "date": "2024-06-27",
+          "value": 2.0,
+          "notes": ""
+        },
+        {
+          "date": "2025-06-27",
+          "value": 4.0,
+          "notes": ""
+        },
+        {
+          "date": "2026-06-27",
+          "value": 2.0,
+          "notes": "Problems"
+        }
+      ],
+      "latest_date": "2026-06-27"
     }
   ],
   "hex_attributes": [
