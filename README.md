@@ -1,9 +1,27 @@
 # Parish Pulse data template
 
-Use **Use this template** on GitHub to create one repository per parish. Configure `config/parish.yaml`, update `data/metrics/example.csv`, then enable GitHub Pages **GitHub Actions** deployment in repository Settings → Pages. Each commit to `main` validates the CSV data, builds a complete static site using the core package and publishes it to GitHub Pages.
+## Features
 
-**Start here:** [Contributor guide for Windows, Mac and Linux](how-to/CONTRIBUTING.md). [Spatial data guide](how-to/SPATIAL_DATA.md).
+- Use **Use this template** on GitHub to create a repository for your parish. 
+- Configure `config/parish.yaml`, update `data/metrics/example.csv`, 
+- Enable GitHub Pages to deploy the website using the repository Settings → Pages. 
 
-The large national GeoPackages stay local; see [local GeoPackage setup](how-to/SETUP-LOCAL-GPKG.md).
+## Getting started
+
+- [initial setup](how-to/setup.md)
+- The large national GeoPackages stay local; see [local GeoPackage setup](how-to/SETUP-LOCAL-GPKG.md)
+- configuration
+
+## Example
+
+
 
 The included example values are fictitious. Replace them with documented parish data before presenting results as facts.
+
+## Get involved
+
+**Contributing to Parish Pulse:** 
+
+- [Contributor guide for Windows, Mac and Linux](how-to/CONTRIBUTING.md). 
+- [Spatial data guide](how-to/SPATIAL_DATA.md).
+

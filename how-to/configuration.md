@@ -1,6 +1,6 @@
 # Configuration Reference
 
-All configuration lives in two files in the `config/` folder.
+All configuration for the tool lives in two files in the `config/` folder.
 
 ---
 
@@ -10,7 +10,7 @@ All configuration lives in two files in the `config/` folder.
 
 | Field | Required | Description |
 |-------|----------|-------------|
-| `name` | ✅ | Parish name — must match exactly what is in `parishes.gpkg` |
+| `name` | YES | Parish name — must match exactly what is in `parishes.gpkg` |
 | `local_authority` | | District or unitary council — used to disambiguate if two parishes share a name |
 | `name_column` | | Column name in `parishes.gpkg` holding the parish name. Auto-detected if not set. |
 | `county` | | County or region — shown on the dashboard |
@@ -28,10 +28,18 @@ All configuration lives in two files in the `config/` folder.
 
 | Field | Default | Description |
 |-------|---------|-------------|
-| `title` | `"[Parish] Parish Pulse"` | Page title shown in the header |
+| `title` | `"[Parish] Parish Dashboard"` | Page title shown in the header |
 | `subtitle` | | Subtitle shown below the title |
-| `accent_colour` | `"#2D7D46"` | Hex colour code for the site theme |
+| `accent_colour` | `#2D7D46"` | Hex colour code for the site theme |
 
+
+### `spatial` section
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `?` | `"?` | ? |
+| `?` | | ? |
+| `?` | | ? |
 ---
 
 ## config/metrics.yaml
@@ -42,13 +50,14 @@ A list of metrics. Each entry becomes one chart on the dashboard.
 
 | Field | Required | Description |
 |-------|----------|-------------|
-| `id` | ✅ | Unique identifier — letters, numbers, underscores only |
-| `label` | ✅ | Chart title shown on the dashboard |
-| `data_file` | ✅ | CSV filename in `data/metrics/` |
+| `id` | YES | Unique identifier — letters, numbers, underscores only |
+| `label` | YES | Chart title shown on the dashboard |
 | `description` | | Short description shown below the chart title |
 | `category` | | Groups charts on the dashboard (e.g. `Retail`, `Transport`) |
+| `chart_type` | | one of `bar`or `line` |
+| `unit` | | base unit that is being charted |
+| `data_file` | YES | CSV filename in `data/metrics/` |
 | `source` | | Data source name |
-| `source_url` | | Link to the data source (optional) |
 
 ### Example
 
@@ -56,27 +65,26 @@ A list of metrics. Each entry becomes one chart on the dashboard.
 metrics:
 
   - id: empty_shops
-    label: "Empty Shops"
-    description: "Number of vacant retail units in the parish."
-    category: "Retail"
-    data_file: "empty-shops.csv"
-    source: "Parish survey"
-    source_url: "https://www.example.com/"
+    label: Empty shops (illustrative)
+    description: Example indicator — replace with your own observations.
+    category: Retail
+    chart_type: bar
+    unit: shops
+    data_file: shops.csv
+    source: Example data (not a real survey)
 
-  - id: bus_passengers
-    label: "Bus Passengers"
-    description: "Monthly bus passenger count at the main stop."
-    category: "Transport"
-    data_file: "bus-passengers.csv"
-    source: "Bus operator data"
+  - id: health_test
+    label: Number of surgeries (illustrative)
+    description: Example indicator — replace with your own observations.
+    category: Health
+    chart_type: line
+    unit: surgeries
+    data_file: health.csv
+    source: Example data (not a real survey)
 ```
 
 ---
 
 ## After editing configuration
 
-Always run `parish-pulse update` after changing either config file to rebuild the dashboard data:
-
-```bash
-uvx parish-pulse update
-```
+Always run `parish-pulse update` after changing either config file to rebuild the dashboard data.

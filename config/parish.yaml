@@ -16,10 +16,10 @@ parish:
 
   # If the parish name column in parishes.gpkg is not auto-detected,
   # set its name here. Usually not needed.
-  # name_column: "PARISH_NM"
+  # name_column: "Name"
 
   # County or region — shown on the dashboard.
-  county: "Somerset"
+  county: "North Somerset"
 
   # A short description shown on the dashboard.
   description: >
@@ -57,6 +57,9 @@ dashboard:
   # Accent colour used throughout the site (hex code).
   accent_colour: "#2D7D46"
 
+# =============================================================================
+# SPATIAL SETTINGS
+# =============================================================================
 
 # National GeoPackages stay on your computer; do not commit them to GitHub.
 # Relative paths are resolved from the parish-pulse-data repository root.

@@ -1,0 +1,83 @@
+# Parish Pulse data repository
+# Place this file at the repository root as .gitignore
+
+# National and local GIS databases
+*.gpkg
+*.gpkg-*
+*.gdb/
+*.sqlite
+*.sqlite3
+*.db
+*.shp
+*.dbf
+*.shx
+
+# QGIS workspaces and project files
+qgis/
+**/qgis/
+
+# Private or sensitive files and folders
+private/
+**/private/
+secrets/
+**/secrets/
+credentials/
+**/credentials/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.kdbx
+id_rsa*
+id_ed25519*
+*credentials*.json
+*service-account*.json
+*secret*.yaml
+*secret*.yml
+*secret*.json
+
+# Local-only config (public config/parish.yaml and metrics.yaml are intentionally tracked)
+config/local.yaml
+config/private.yaml
+config/secrets.yaml
+config/secrets.yml
+
+# Python environments, caches and packaging
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Editors and operating-system clutter
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+
+# Temporary and backup files
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*.log
+.cache/
+tmp/
+temp/
+
+# Note: keep data/spatial/*.geojson, data/metrics/*.csv,
+# config/parish.yaml, config/metrics.yaml, and docs/ or site/
+# if you publish them via GitHub Pages.

@@ -12,7 +12,7 @@ metrics:
   - id: health_test
     label: Some health thing (illustrative)
     description: Example indicator — replace with your own observations.
-    category: RetaHealthil
+    category: Health
     chart_type: line
     unit: stuff
     data_file: health.csv
